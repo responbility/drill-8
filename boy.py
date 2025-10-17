@@ -84,6 +84,18 @@ class Idle:
             self.boy.image.clip_draw(self.boy.frame * 100, 200, 100, 100, self.boy.x, self.boy.y)
 
 
+class AutoRun:
+    def init(self, boy):
+        self.boy = Boy
+    def enter(self,e):
+
+    def draw(self):
+         self.
+    def do(self):
+
+    def timeout(self):
+
+
 class Boy:
     def __init__(self):
         self.x, self.y = 400, 90
@@ -103,6 +115,7 @@ class Boy:
                 self.RUN:{left_down: self.IDLE, right_down: self.IDLE, right_up: self.IDLE, left_up: self.IDLE},
             }
         )
+
 
     def update(self):
         self.state_machine.update()
