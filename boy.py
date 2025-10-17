@@ -88,11 +88,11 @@ class AutoRun:
     def init(self, boy):
         self.boy = Boy
     def enter(self,e):
-
+        self.boy.wait_start_time = get_time()
     def draw(self):
          self.
     def do(self):
-
+    if get_time() - self.boy.wait_start_time > 5.0:
     def timeout(self):
 
 
