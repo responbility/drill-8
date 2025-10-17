@@ -92,20 +92,24 @@ class AutoRun:
         self.scale_multiplier = 0.5
         self.speed_multiplier = 0.5
 
+
     def enter(self,e):
         self.boy.dir = 0
         self.boy.wait_start_time = get_time()
-        
+
 
     def draw(self):
          width = self.boy.image.w * self.scale
          height = self.boy.image.h * self.scale
          self.boy.image.clip_draw_to_origin(0, 0, self.boy.image.w, self.boy.image.h, self.boy.x, self.boy.y, width, height)
     def do(self):
+        self.scale += self.scale_multiplier * self.speed * 0.01
+        self.speed += self.speed_multiplier * 0.01
         if get_time() - self.boy.wait_start_time > 5.0:
             self.boy.state_machine.handle_state_event(('TIME_OUT', None))
     def exit(self,e):
-        pass
+        self.scale = 1.0
+        self.speed = 1.0
 
 
 class Boy:
@@ -119,12 +123,14 @@ class Boy:
         self.IDLE = Idle(self)
         self.SLEEP = Sleep(self)
         self.RUN = Run(self)
+        self.AUTO_RUN = AutoRun(self)
         self.state_machine = StateMachine(
             self.IDLE,
             {
                 self.SLEEP: {space_down: self.IDLE},
-                self.IDLE:{right_up: self.RUN,left_up: self.RUN, right_down: self.RUN, left_down: self.RUN,time_out: self.SLEEP},
+                self.IDLE:{right_up: self.RUN,left_up: self.RUN, right_down: self.RUN, left_down: self.RUN,time_out: self.SLEEP,a_down: self.AUTO_RUN},
                 self.RUN:{left_down: self.IDLE, right_down: self.IDLE, right_up: self.IDLE, left_up: self.IDLE},
+           self.AUTO_RUN:{time_out: self.IDLE}
             }
         )
 
