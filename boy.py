@@ -86,20 +86,26 @@ class Idle:
 
 class AutoRun:
     def __init__(self, boy):
-        self.boy = Boy
+        self.boy = boy
         self.scale = 1.0
         self.speed = 1.0
         self.scale_multiplier = 0.5
         self.speed_multiplier = 0.5
 
     def enter(self,e):
+        self.boy.dir = 0
         self.boy.wait_start_time = get_time()
+        
+
     def draw(self):
-         self.
+         width = self.boy.image.w * self.scale
+         height = self.boy.image.h * self.scale
+         self.boy.image.clip_draw_to_origin(0, 0, self.boy.image.w, self.boy.image.h, self.boy.x, self.boy.y, width, height)
     def do(self):
-    if get_time() - self.boy.wait_start_time > 5.0:
-        self.boy.state_machine.handle_state_event(('TIME_OUT', None))
-    def timeout(self):
+        if get_time() - self.boy.wait_start_time > 5.0:
+            self.boy.state_machine.handle_state_event(('TIME_OUT', None))
+    def exit(self,e):
+        pass
 
 
 class Boy:
